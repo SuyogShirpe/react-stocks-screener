@@ -1,8 +1,10 @@
 import React from "react";
 import Logo from "../assets/Logo.png";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function Navbar() {
+  const getNavLinkClass = ({ isActive }) =>
+    `nav-link ${isActive ? "text-danger fw-semibold" : "text-dark text-decoration-none fw-semibold" }`;
   return (
     <nav className="d-flex align-items-center px-3 py-2 shadow-sm bg-white">
       <img
@@ -12,7 +14,10 @@ function Navbar() {
         alt="Logo"
       />
       <div className="flex-grow-1 d-flex justify-content-center mx-3">
-        <div className="position-relative" style={{ maxWidth: "500px", width: "100%" }}>
+        <div
+          className="position-relative"
+          style={{ maxWidth: "500px", width: "100%" }}
+        >
           <i
             className="bi bi-search position-absolute"
             style={{
@@ -32,17 +37,21 @@ function Navbar() {
         </div>
       </div>
 
-      
-
       <ul className="d-flex list-unstyled ms-auto gap-4 mb-0 fs-5">
-        <li >
-          <Link to="/" className="text-decoration-none text-dark">Home</Link>
+        <li>
+          <NavLink to="/" className={getNavLinkClass}>
+            Home
+          </NavLink>
         </li>
         <li>
-          <Link to="/about" className="text-decoration-none text-dark">About</Link>
+          <NavLink to="/about" className={getNavLinkClass}>
+            About
+          </NavLink>
         </li>
         <li>
-          <Link to="/contact" className="text-decoration-none text-dark">Contact</Link>
+          <NavLink to="/contact" className={getNavLinkClass}>
+            Contact
+          </NavLink>
         </li>
       </ul>
     </nav>
