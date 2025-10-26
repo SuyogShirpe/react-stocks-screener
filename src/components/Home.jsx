@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
 
-function Home() {
+export default function Home() {
   const [stocks, setStocks] = useState([]);
   const [loading , setLoading]  = useState(true);
 
@@ -37,6 +37,7 @@ function Home() {
       setLoading(false);
     };
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if(loading){
@@ -96,5 +97,3 @@ function Home() {
     </>
   );
 }
-
-export default Home;

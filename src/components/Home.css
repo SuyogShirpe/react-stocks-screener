@@ -11,11 +11,6 @@
   font-size: 0.95rem; 
 }
 
-
-.stock-table {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-
 .stock-row:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
