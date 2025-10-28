@@ -9,14 +9,27 @@ export default function Home() {
   const stockSymbols = [
     "AAPL","TSLA","INFY","GOOGL","MSFT","AMZN","BABA",
     "RIO.L","NIO","NFLX","FB","NVDA","JPM","V","DIS",
-    "ADBE","PYPL","INTC",
+    "ADBE","PYPL","INTC", "CSCO","ORCL","CRM","SAP",
+    "UBER","LYFT","TWTR","SNAP","SQ","ZM","SHOP","SPOT",
+    "ABNB","TCEHY","BIDU","JD","PDD","XPEV","LI","BYDDF",
+    "DIDI","NTES","WB","MELI","SE","SINA","CTSH","WIT",
+    "HPE","VMW","DXC","FTNT","PANW","ZS","OKTA","DDOG",
+    "CRWD","NET","TEAM","DOCU","ROKU","ETSY","TWLO",
+    "WORK","FSLY","U","PLTR","AI","SNOW","ABG","CLOU",
+    "SPLK","AYX","DATA","ALGN","BMRN","ILMN","REGN","VRTX",
+    "GILD","BIIB","AMGN","TSM","ASML","QCOM","AVGO","TXN",
+    "MU","LRCX","AMD","NXPI","MCHP","SWKS","KLAC","ON",
+    "ADI","CDNS","MPWR","XLNX","WDC","STX","HIMX","CREE",
+    "TER","LITE","MTSI","ZS","PANW","FTNT","OKTA","CRWD",
+    "NET","DDOG","SNOW","PLTR","AI","U","WORK","FSLY",
+    "TWLO","ETSY","ROKU","DOCU","TEAM","ABNB","SHOP"
   ];
 
   useEffect(() => {
     const fetchData = async () => {
       const randomStock = stockSymbols
         .sort(() => 0.5 - Math.random())
-        .slice(0, 5);
+        .slice(0, 10);
 
       const stockData = await Promise.all(
         randomStock.map(async (symbol) => {
@@ -51,47 +64,52 @@ export default function Home() {
   return (
     <>
       <div className="container mt-4 d-flex justify-content-center">
-        <div className="stock-table" style={{ width: "65%" }}>
-          <div className="row stock-header text-center align-items-center py-3 px-2 mb-2 shadow-sm">
+        <div className="stock-table " style={{ width: "65%" }}>
+          <div className="row stock-header  text-center align-items-center py-3 px-3 mb-2 shadow-sm">
             <div className="col">Logo</div>
             <div className="col">Name</div>
             <div className="col">Ticker</div>
-            <div className="col">Market Cap <br /> <small>(T USD)</small></div>
+            <div className="col">
+              Market Cap <br /> <small>(T USD)</small>
+            </div>
             <div className="col">Price</div>
             <div className="col">Change (%)</div>
             <div className="col">High</div>
             <div className="col">Low</div>
           </div>
 
-          {stocks.map((stock, index) => (
-            <div
-              key={index}
-              className={`row text-center align-items-center py-3 px-2 my-2 shadow-sm rounded bg-white stock-row`}
-            >
-              <div className="col">
-                <img
-                  src={stock.profile.logo}
-                  alt="company logo"
-                  className="img-fluid rounded-circle"
-                  style={{ width: "40px", height: "40px" }}
-                />
-              </div>
-              <div className="col fw-bold">{stock.profile.name}</div>
-              <div className="col">{stock.profile.ticker}</div>
-              <div className="col">
-                {(stock.profile.marketCapitalization / 1000000).toFixed(2)}T
-              </div>
-              <div className="col">${stock.quote.c}</div>
+          <div className="stock-scroll" style={{maxHeight:"500px", overflow:"auto"}}>
+            {stocks.map((stock, index) => (
               <div
-                className="col fw-bold"
-                style={{ color: stock.quote.dp > 0 ? "green" : "red" }}
+                key={index}
+                className={`d-flex text-center align-items-center justify-content-between py-3  my-2
+             shadow-sm rounded bg-white stock-row`}
               >
-                {stock.quote.dp}%
+                <div className="col">
+                  <img
+                    src={stock.profile.logo}
+                    alt="company logo"
+                    className="img-fluid rounded-circle"
+                    style={{ width: "40px", height: "40px" }}
+                  />
+                </div>
+                <div className="col fw-bold">{stock.profile.name}</div>
+                <div className="col">{stock.profile.ticker}</div>
+                <div className="col">
+                  {(stock.profile.marketCapitalization / 1000000).toFixed(2)}T
+                </div>
+                <div className="col">${stock.quote.c}</div>
+                <div
+                  className="col fw-bold"
+                  style={{ color: stock.quote.dp > 0 ? "green" : "red" }}
+                >
+                  {stock.quote.dp}%
+                </div>
+                <div className="col">{stock.quote.h}</div>
+                <div className="col">{stock.quote.l}</div>
               </div>
-              <div className="col">{stock.quote.h}</div>
-              <div className="col">{stock.quote.l}</div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </>
