@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
+import { Link } from "react-router-dom";
+import { API_KEYS } from "../config/apiKeys";
 
 export default function Home() {
   const [stocks, setStocks] = useState([]);
   const [loading , setLoading]  = useState(true);
 
-  const API_KEY = "d3ufbmpr01qil4apqa0gd3ufbmpr01qil4apqa10";
+  const API_KEY = API_KEYS.FINNHUB;
+  
   const stockSymbols = [
     "AAPL","TSLA","INFY","GOOGL","MSFT","AMZN","BABA",
     "RIO.L","NIO","NFLX","FB","NVDA","JPM","V","DIS",
@@ -29,7 +32,7 @@ export default function Home() {
     const fetchData = async () => {
       const randomStock = stockSymbols
         .sort(() => 0.5 - Math.random())
-        .slice(0, 10);
+        .slice(0,  15);
 
       const stockData = await Promise.all(
         randomStock.map(async (symbol) => {
@@ -50,6 +53,7 @@ export default function Home() {
       setLoading(false);
     };
     fetchData();
+  
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -64,7 +68,7 @@ export default function Home() {
   return (
     <>
       <div className="container mt-4 d-flex justify-content-center">
-        <div className="stock-table " style={{ width: "65%" }}>
+        <div className="stock-table " style={{ width: "90%" }}>
           <div className="row stock-header  text-center align-items-center py-3 px-3 mb-2 shadow-sm">
             <div className="col">Logo</div>
             <div className="col">Name</div>
@@ -80,7 +84,7 @@ export default function Home() {
 
           <div className="stock-scroll" style={{maxHeight:"500px", overflow:"auto"}}>
             {stocks.map((stock, index) => (
-              <div
+              <Link to={`/stock/${stock.profile.ticker}`}
                 key={index}
                 className={`d-flex text-center align-items-center justify-content-between py-3  my-2
              shadow-sm rounded bg-white stock-row`}
@@ -107,7 +111,7 @@ export default function Home() {
                 </div>
                 <div className="col">{stock.quote.h}</div>
                 <div className="col">{stock.quote.l}</div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
