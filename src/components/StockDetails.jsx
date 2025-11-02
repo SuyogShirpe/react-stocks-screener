@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { API_KEYS } from "../config/apiKeys";
 import Chart from "react-apexcharts";
 
 function StockDetails() {
   const { stockSymbol } = useParams();
   const API_KEY = API_KEYS.TWELVE_DATA;
+  const navigate = useNavigate();
 
   const [series, setSeries] = useState([]);
-  const [options, setOptions] = useState({
+  const [options] = useState({
     chart: {
       id: "candlestick-chart",
       type: "candlestick",
@@ -26,7 +27,7 @@ function StockDetails() {
     },
     plotOptions: {
       candlestick: {
-        colors: { upward: "#26a69a", downward: "#ef5350" },
+        colors: { upward: "#1c855bff", downward: "#EF5350" },
       },
     },
     theme: { mode: "dark" },
@@ -66,6 +67,24 @@ function StockDetails() {
   }, [stockSymbol, API_KEY]);
   return (
     <div style={{ padding: "1rem" }}>
+      <button
+        onClick={() => navigate("/")}
+        style={{
+          width: "35px",
+          height: "35px",
+          backgroundColor: "white",
+          color: "black",
+          borderRadius: "50%",
+          fontWeight: "bold",
+          border:"2px solid black",
+          transition: "0.3s ease",
+        }}
+        
+        className="btn d-flex  align-items-center justify-content-center"
+      >
+        {" "}
+        <i className="bi bi-arrow-left"></i>
+      </button>
       <h3>{stockSymbol}</h3>
 
       {series.length > 0 ? (
