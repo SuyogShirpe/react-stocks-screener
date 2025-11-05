@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { API_KEYS } from "../config/apiKeys";
 import Chart from "react-apexcharts";
+import "./StockDetails.css";
 
 function StockDetails() {
   const { stockSymbol } = useParams();
@@ -66,44 +67,42 @@ function StockDetails() {
     fetchData();
   }, [stockSymbol, API_KEY]);
   return (
-    <div style={{ padding: "1rem" }}>
+    <div>
       <button
         onClick={() => navigate("/")}
-        style={{
-          width: "35px",
-          height: "35px",
-          backgroundColor: "white",
-          color: "black",
-          borderRadius: "50%",
-          fontWeight: "bold",
-          border:"2px solid black",
-          transition: "0.3s ease",
+        className="btn d-flex align-items-center justify-content-center backBtn"
+        onMouseEnter={(e) => {
+          const btn = e.currentTarget;
+          btn.style.backgroundColor = "#aeaeae44";
         }}
-        
-        className="btn d-flex  align-items-center justify-content-center"
+        onMouseLeave={(e) => {
+          const btn = e.currentTarget;
+          btn.style.backgroundColor = "#ffffff";
+        }}
       >
-        {" "}
         <i className="bi bi-arrow-left"></i>
       </button>
-      <h3>{stockSymbol}</h3>
+      <div className="stockGraphContainer">
+        <h3>{stockSymbol}</h3>
 
-      {series.length > 0 ? (
-        <Chart
-          options={options}
-          series={series}
-          type="candlestick"
-          height={400}
-        />
-      ) : (
-        <div
-          className="d-flex justify-content-center align-items-center"
-          style={{ height: "80vh" }}
-        >
-          <div className="spinner-border text-danger" role="status">
-            <span className="visually-hidden">Loading...</span>
+        {series.length > 0 ? (
+          <Chart
+            options={options}
+            series={series}
+            type="candlestick"
+            height={400}
+          />
+        ) : (
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ height: "80vh" }}
+          >
+            <div className="spinner-border text-danger" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

@@ -1,0 +1,19 @@
+.stockGraphContainer {
+  background-color: #aeaeae44;
+  border-radius: 12px;
+  margin: 0.5rem;
+  padding: 1rem;
+}
+
+.backBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  color: #030303ff;
+  font-size: 1.2rem;
+  transition: "all 0.3s ease";
+  cursor: "pointer";
+  border: "none";
+  margin: 0.5rem;
+}
