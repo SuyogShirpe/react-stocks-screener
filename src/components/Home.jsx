@@ -10,22 +10,16 @@ export default function Home() {
   const API_KEY = API_KEYS.FINNHUB;
   
   const stockSymbols = [
-    "AAPL","TSLA","INFY","GOOGL","MSFT","AMZN","BABA",
-    "RIO.L","NIO","NFLX","FB","NVDA","JPM","V","DIS",
-    "ADBE","PYPL","INTC", "CSCO","ORCL","CRM","SAP",
-    "UBER","LYFT","TWTR","SNAP","SQ","ZM","SHOP","SPOT",
-    "ABNB","TCEHY","BIDU","JD","PDD","XPEV","LI","BYDDF",
-    "DIDI","NTES","WB","MELI","SE","SINA","CTSH","WIT",
-    "HPE","VMW","DXC","FTNT","PANW","ZS","OKTA","DDOG",
-    "CRWD","NET","TEAM","DOCU","ROKU","ETSY","TWLO",
-    "WORK","FSLY","U","PLTR","AI","SNOW","ABG","CLOU",
-    "SPLK","AYX","DATA","ALGN","BMRN","ILMN","REGN","VRTX",
-    "GILD","BIIB","AMGN","TSM","ASML","QCOM","AVGO","TXN",
-    "MU","LRCX","AMD","NXPI","MCHP","SWKS","KLAC","ON",
-    "ADI","CDNS","MPWR","XLNX","WDC","STX","HIMX","CREE",
-    "TER","LITE","MTSI","ZS","PANW","FTNT","OKTA","CRWD",
-    "NET","DDOG","SNOW","PLTR","AI","U","WORK","FSLY",
-    "TWLO","ETSY","ROKU","DOCU","TEAM","ABNB","SHOP"
+  "AAPL","ABG","ABNB","ADI","ADBE","AI","ALGN","AMGN","AMD","AMZN",
+  "ASML","AVGO","BABA","BIDU","BIIB","BMRN","BYDDF","CDNS",
+  "CRM","CRWD","CSCO","CTSH","DDOG","DIS","DOCU","DXC",
+  "ETSY","META","FSLY","FTNT","GILD","GOOGL","HIMX","HPE","ILMN","INFY",
+  "INTC","JD","JPM","KLAC","LI","LITE","LRCX","LYFT","MCHP","MELI",
+  "MPWR","MSFT","MTSI","MU","NET","NFLX","NIO","NTES","NVDA","NXPI",
+  "OKTA","ON","ORCL","PANW","PDD","PLTR","PYPL","QCOM","REGN",
+  "ROKU","SAP","SE","SHOP","SNAP","SNOW","SPOT",
+  "STX","TEAM","TCEHY","TER","TSLA","TSM","TWLO","U","UBER",
+  "V","WDC","WB","WIT","XPEV","ZS"
   ];
 
   useEffect(() => {
@@ -50,7 +44,6 @@ export default function Home() {
         })
       );
       setStocks(stockData);
-      console.log(stockData);
       setLoading(false);
     };
     fetchData();
