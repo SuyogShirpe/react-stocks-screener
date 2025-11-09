@@ -46,6 +46,7 @@ function StockDetails() {
         `https://api.twelvedata.com/time_series?symbol=${stockSymbol}&interval=1day&outputsize=500&apikey=${API_KEY}`
       );
       const data = await response.json();
+      console.log("Fetched data:", data);
 
       if (data.values) {
         const ohlc = data.values

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
-import { Link } from "react-router-dom";
 import { API_KEYS } from "../config/apiKeys";
+import StockCard from "./StockCard";
 
 export default function Home() {
   const [stocks, setStocks] = useState([]);
@@ -50,6 +50,7 @@ export default function Home() {
         })
       );
       setStocks(stockData);
+      console.log(stockData);
       setLoading(false);
     };
     fetchData();
@@ -84,34 +85,7 @@ export default function Home() {
 
           <div className="stock-scroll" style={{maxHeight:"500px", overflow:"auto"}}>
             {stocks.map((stock, index) => (
-              <Link to={`/stock/${stock.profile.ticker}`}
-                key={index}
-                className={`d-flex text-center align-items-center justify-content-between py-3  my-2
-             shadow-sm rounded bg-white stock-row`}
-              >
-                <div className="col">
-                  <img
-                    src={stock.profile.logo}
-                    alt="company logo"
-                    className="img-fluid rounded-circle"
-                    style={{ width: "40px", height: "40px" }}
-                  />
-                </div>
-                <div className="col fw-bold">{stock.profile.name}</div>
-                <div className="col">{stock.profile.ticker}</div>
-                <div className="col">
-                  {(stock.profile.marketCapitalization / 1000000).toFixed(2)}T
-                </div>
-                <div className="col">${stock.quote.c}</div>
-                <div
-                  className="col fw-bold"
-                  style={{ color: stock.quote.dp > 0 ? "green" : "red" }}
-                >
-                  {stock.quote.dp}%
-                </div>
-                <div className="col">{stock.quote.h}</div>
-                <div className="col">{stock.quote.l}</div>
-              </Link>
+              <StockCard key={index} stock={stock} />
             ))}
           </div>
         </div>
