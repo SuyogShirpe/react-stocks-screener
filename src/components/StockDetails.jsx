@@ -5,7 +5,7 @@ import Chart from "react-apexcharts";
 import "./StockDetails.css";
 
 function StockDetails() {
-  const { stockSymbol } = useParams();
+  const { ticker } = useParams();
   const API_KEY = API_KEYS.TWELVE_DATA;
   const navigate = useNavigate();
 
@@ -39,11 +39,11 @@ function StockDetails() {
   });
 
   useEffect(() => {
-    console.log("Fetching data for:", stockSymbol);
+    console.log("Fetching data for:", ticker);
 
     const fetchData = async () => {
       const response = await fetch(
-        `https://api.twelvedata.com/time_series?symbol=${stockSymbol}&interval=1day&outputsize=500&apikey=${API_KEY}`
+        `https://api.twelvedata.com/time_series?symbol=${ticker}&interval=1day&outputsize=500&apikey=${API_KEY}`
       );
       const data = await response.json();
       console.log("Fetched data:", data);
@@ -66,7 +66,7 @@ function StockDetails() {
     };
 
     fetchData();
-  }, [stockSymbol, API_KEY]);
+  }, [ticker, API_KEY]);
   return (
     <div>
       <button
@@ -84,7 +84,7 @@ function StockDetails() {
         <i className="bi bi-arrow-left"></i>
       </button>
       <div className="stockGraphContainer">
-        <h3>{stockSymbol}</h3>
+        <h3>{ticker}</h3>
 
         {series.length > 0 ? (
           <Chart

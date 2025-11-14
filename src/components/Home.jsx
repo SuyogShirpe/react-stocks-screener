@@ -1,62 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo } from "react";
+import useRandProfQtApi from "../custom_hooks/useRandProfQtApi";
 import "./Home.css";
-import { API_KEYS } from "../config/apiKeys";
+import { tickers } from "../assets/tickersList.js";
 import StockCard from "./StockCard";
 
 export default function Home() {
-  const [stocks, setStocks] = useState([]);
-  const [loading , setLoading]  = useState(true);
-
-  const API_KEY = API_KEYS.FINNHUB;
-  
-  const stockSymbols = [
-  "AAPL","ABG","ABNB","ADI","ADBE","AI","ALGN","AMGN","AMD","AMZN",
-  "ASML","AVGO","BABA","BIDU","BIIB","BMRN","BYDDF","CDNS",
-  "CRM","CRWD","CSCO","CTSH","DDOG","DIS","DOCU","DXC",
-  "ETSY","META","FSLY","FTNT","GILD","GOOGL","HIMX","HPE","ILMN","INFY",
-  "INTC","JD","JPM","KLAC","LI","LITE","LRCX","LYFT","MCHP","MELI",
-  "MPWR","MSFT","MTSI","MU","NET","NFLX","NIO","NTES","NVDA","NXPI",
-  "OKTA","ON","ORCL","PANW","PDD","PLTR","PYPL","QCOM","REGN",
-  "ROKU","SAP","SE","SHOP","SNAP","SNOW","SPOT",
-  "STX","TEAM","TCEHY","TER","TSLA","TSM","TWLO","U","UBER",
-  "V","WDC","WB","WIT","XPEV","ZS"
-  ];
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const randomStock = stockSymbols
-        .sort(() => 0.5 - Math.random())
-        .slice(0,  15);
-
-      const stockData = await Promise.all(
-        randomStock.map(async (symbol) => {
-          const [profileRes, quoteRes] = await Promise.all([
-            fetch(
-              `https://finnhub.io/api/v1/stock/profile2?symbol=${symbol}&token=${API_KEY}`
-            ),
-            fetch(
-              `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`
-            ),
-          ]);
-          const profileData = await profileRes.json();
-          const quoteData = await quoteRes.json();
-          return { profile: profileData, quote: quoteData };
-        })
-      );
-      setStocks(stockData);
-      setLoading(false);
-    };
-    fetchData();
-  
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const randomStocks = useMemo(() => {
+    return [...tickers].sort(() => 0.5 - Math.random()).slice(0, 15);
   }, []);
 
-  if(loading){
-    return <div className="d-flex justify-content-center align-items-center" style={{height: "80vh"}}>
-      <div className="spinner-border text-danger" role="status">
-        <span className="visually-hidden">Loading...</span>
+  const { stocks, isLoading } = useRandProfQtApi(randomStocks);
+
+  if (isLoading) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "80vh" }}
+      >
+        <div className="spinner-border text-danger" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
       </div>
-    </div>
+    );
   }
 
   return (
@@ -76,9 +41,12 @@ export default function Home() {
             <div className="col">Low</div>
           </div>
 
-          <div className="stock-scroll" style={{maxHeight:"500px", overflow:"auto"}}>
-            {stocks.map((stock, index) => (
-              <StockCard key={index} stock={stock} />
+          <div
+            className="stock-scroll"
+            style={{ maxHeight: "500px", overflow: "auto" }}
+          >
+            {stocks.map((stock) => (
+              <StockCard key={stock.profile.ticker} stock={stock} />
             ))}
           </div>
         </div>
