@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { API_KEYS } from "../config/apiKeys";
+import { API_KEYS } from "../assets/apiKeys";
 
 export default function useSingleProfQtApi(ticker) {
   const FINNHUB = API_KEYS.FINNHUB;

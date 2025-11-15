@@ -23,7 +23,7 @@ const StockCard = ({ stock }) => {
       </div>
       <div className="col fw-bold">{name}</div>
       <div className="col">{ticker}</div>
-      <div className="col">{(marketCapitalization / 1000000).toFixed(2)}T</div>
+      <div className="col">{(marketCapitalization / 1_000).toFixed(2)}M</div>
       <div className="col">${c}</div>
       <div className="col fw-bold" style={{ color: dp > 0 ? "green" : "red" }}>
         {dp}%

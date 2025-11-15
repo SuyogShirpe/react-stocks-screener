@@ -1,111 +1,123 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { API_KEYS } from "../config/apiKeys";
+import useGraphApi from "../custom_hooks/useGraphApi";
 import Chart from "react-apexcharts";
 import "./StockDetails.css";
+import useSingleProfQtApi from "../custom_hooks/useSingleProfQuote";
 
-function StockDetails() {
+export default function StockDetails() {
   const { ticker } = useParams();
-  const API_KEY = API_KEYS.TWELVE_DATA;
   const navigate = useNavigate();
+  const { series, graphLoading } = useGraphApi(ticker);
+  const { stock, isLoading } = useSingleProfQtApi(ticker);
 
-  const [series, setSeries] = useState([]);
-  const [options] = useState({
-    chart: {
-      id: "candlestick-chart",
-      type: "candlestick",
-      toolbar: { show: true },
-      background: "#0e1116",
-    },
-    grid: { borderColor: "#1f2937" },
-    xaxis: {
-      type: "datetime",
-      labels: { style: { colors: "#9CA3AF" } },
-    },
-    yaxis: {
-      tooltip: { enabled: true },
-      labels: { style: { colors: "#9CA3AF" } },
-    },
-    plotOptions: {
-      candlestick: {
-        colors: { upward: "#1c855bff", downward: "#EF5350" },
+  const options = useMemo(
+    () => ({
+      chart: {
+        id: "candlestick-chart",
+        type: "candlestick",
+        toolbar: { show: true },
+        background: "#0e1116",
       },
-    },
-    theme: { mode: "dark" },
-    tooltip: {
-      theme: "dark",
-      x: { format: "dd MMM yyyy" },
-    },
-  });
+      grid: { borderColor: "#1f2937" },
+      xaxis: {
+        type: "datetime",
+        labels: { style: { colors: "#9CA3AF" } },
+      },
+      yaxis: {
+        tooltip: { enabled: true },
+        labels: { style: { colors: "#9CA3AF" } },
+      },
+      plotOptions: {
+        candlestick: { colors: { upward: "#1c855bff", downward: "#EF5350" } },
+      },
+      theme: { mode: "light" },
+      tooltip: { theme: "light", x: { format: "dd MMM yyyy" } },
+    }),
+    []
+  );
 
-  useEffect(() => {
-    console.log("Fetching data for:", ticker);
+  if (isLoading || graphLoading) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "80vh" }}
+      >
+        <div className="spinner-border text-danger" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
 
-    const fetchData = async () => {
-      const response = await fetch(
-        `https://api.twelvedata.com/time_series?symbol=${ticker}&interval=1day&outputsize=500&apikey=${API_KEY}`
-      );
-      const data = await response.json();
-      console.log("Fetched data:", data);
-
-      if (data.values) {
-        const ohlc = data.values
-          .map((item) => ({
-            x: new Date(item.datetime),
-            y: [
-              parseFloat(item.open),
-              parseFloat(item.high),
-              parseFloat(item.low),
-              parseFloat(item.close),
-            ],
-          }))
-          .reverse();
-
-        setSeries([{ data: ohlc }]);
-      }
-    };
-
-    fetchData();
-  }, [ticker, API_KEY]);
   return (
     <div>
       <button
         onClick={() => navigate("/")}
         className="btn d-flex align-items-center justify-content-center backBtn"
-        onMouseEnter={(e) => {
-          const btn = e.currentTarget;
-          btn.style.backgroundColor = "#aeaeae44";
-        }}
-        onMouseLeave={(e) => {
-          const btn = e.currentTarget;
-          btn.style.backgroundColor = "#ffffff";
-        }}
       >
         <i className="bi bi-arrow-left"></i>
       </button>
-      <div className="stockGraphContainer">
-        <h3>{ticker}</h3>
 
-        {series.length > 0 ? (
+      <div className="stockGraphContainer">
+        <div className="stockHeader">
+          <img
+            src={stock.profile.logo}
+            alt={`${stock.profile.name} logo`}
+            className="img-fluid rounded-circle"
+            style={{ width: "40px", height: "40px" }}
+          />
+          <h4 className="col fw-bold">{stock.profile.name}</h4>
+        </div>
+
+        {graphLoading ? (
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ height: "60vh" }}
+          >
+            <div className="spinner-border text-danger" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        ) : (
           <Chart
             options={options}
             series={series}
             type="candlestick"
             height={400}
           />
-        ) : (
-          <div
-            className="d-flex justify-content-center align-items-center"
-            style={{ height: "80vh" }}
-          >
-            <div className="spinner-border text-danger" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </div>
         )}
+
+        <div className="stockData">
+          <h5 className="currentValue">Current Value: ${stock.quote.c}</h5>
+
+          <div className="rowItem">
+            <span className="label">Market Cap:</span>
+            <span className="value">
+              {(stock.profile.marketCapitalization / 1_000).toFixed(2)}M
+            </span>
+          </div>
+
+          <div className="rowItem">
+            <span className="label">Change:</span>
+            <span
+              className={`value change ${stock.quote.dp > 0 ? "green" : "red"}`}
+            >
+              {stock.quote.dp}%
+            </span>
+          </div>
+
+          <div className="rowItem">
+            <span className="label">Day High:</span>
+            <span className="value">{stock.quote.h}</span>
+          </div>
+
+          <div className="rowItem">
+            <span className="label">Day Low:</span>
+            <span className="value">{stock.quote.l}</span>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
-
-export default StockDetails;
