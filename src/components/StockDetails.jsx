@@ -70,52 +70,58 @@ export default function StockDetails() {
           <h4 className="col fw-bold">{stock.profile.name}</h4>
         </div>
 
-        {graphLoading ? (
-          <div
-            className="d-flex justify-content-center align-items-center"
-            style={{ height: "60vh" }}
-          >
-            <div className="spinner-border text-danger" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </div>
-        ) : (
-          <Chart
-            options={options}
-            series={series}
-            type="candlestick"
-            height={400}
-          />
-        )}
-
-        <div className="stockData">
+        <div className="stockData horizontal">
           <h5 className="currentValue">Current Value: ${stock.quote.c}</h5>
 
-          <div className="rowItem">
-            <span className="label">Market Cap:</span>
-            <span className="value">
-              {(stock.profile.marketCapitalization / 1_000).toFixed(2)}M
-            </span>
-          </div>
+          <div className="horizontalItems">
+            <div className="rowItem">
+              <span className="label">Market Cap:</span>
+              <span className="value">
+                {(stock.profile.marketCapitalization / 1_000).toFixed(2)}M
+              </span>
+            </div>
 
-          <div className="rowItem">
-            <span className="label">Change:</span>
-            <span
-              className={`value change ${stock.quote.dp > 0 ? "green" : "red"}`}
+            <div className="rowItem">
+              <span className="label">Change:</span>
+              <span
+                className={`value change ${
+                  stock.quote.dp > 0 ? "green" : "red"
+                }`}
+              >
+                {stock.quote.dp}%
+              </span>
+            </div>
+
+            <div className="rowItem">
+              <span className="label">Day High:</span>
+              <span className="value">{stock.quote.h}</span>
+            </div>
+
+            <div className="rowItem">
+              <span className="label">Day Low:</span>
+              <span className="value">{stock.quote.l}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="chartDisplay">
+          {graphLoading ? (
+            <div
+              className="d-flex justify-content-center align-items-center"
+              style={{ height: "60vh" }}
             >
-              {stock.quote.dp}%
-            </span>
-          </div>
-
-          <div className="rowItem">
-            <span className="label">Day High:</span>
-            <span className="value">{stock.quote.h}</span>
-          </div>
-
-          <div className="rowItem">
-            <span className="label">Day Low:</span>
-            <span className="value">{stock.quote.l}</span>
-          </div>
+              <div className="spinner-border text-danger" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          ) : (
+            <Chart
+              options={options}
+              series={series}
+              type="candlestick"
+              height={400}
+            />
+          )}
         </div>
       </div>
     </div>
