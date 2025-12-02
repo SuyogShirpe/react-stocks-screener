@@ -13,29 +13,6 @@ function Navbar() {
         style={{ width: "40px", height: "40px" }}
         alt="Logo"
       />
-      <div className="flex-grow-1 d-flex justify-content-center mx-3">
-        <div
-          className="position-relative"
-          style={{ maxWidth: "500px", width: "100%" }}
-        >
-          <i
-            className="bi bi-search position-absolute"
-            style={{
-              left: "10px",
-              top: "50%",
-              transform: "translateY(-50%)",
-              color: "#6c757d",
-              pointerEvents: "none",
-            }}
-          ></i>
-          <input
-            type="text"
-            className="form-control ps-5 shadow-sm bg-white"
-            placeholder="Search Stock"
-            style={{ borderRadius: "50px" }}
-          />
-        </div>
-      </div>
 
       <ul className="d-flex list-unstyled ms-auto gap-4 mb-0 fs-5">
         <li>
