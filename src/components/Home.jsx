@@ -1,9 +1,12 @@
-import SearchResult from "./searchResult.jsx";
+import React from "react";
 import StocksTable from "./StocksTable.jsx";
+import SearchDisplay from "./SearchDisplay.jsx";
 import { useState } from "react";
+import useTickerApi from "../custom_hooks/useTickerApi.jsx";
 
 export default function Home() {
-  const [isFocused, setIsFocused] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const { searchOutput, isLoading } = useTickerApi(searchInput);
 
   return (
     <>
@@ -27,14 +30,22 @@ export default function Home() {
             className="form-control ps-5 shadow-sm bg-white"
             placeholder="Search Stock"
             style={{ borderRadius: "50px" }}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
           />
         </div>
       </div>
 
       <div className="d-flex justify-content-center mt-3">
-        {isFocused ? <SearchResult /> : <StocksTable />}
+        {searchInput ? (
+          isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <SearchDisplay searchResults={searchOutput} />
+          )
+        ) : (
+          <StocksTable />
+        )}
       </div>
     </>
   );
