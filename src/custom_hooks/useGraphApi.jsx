@@ -8,6 +8,8 @@ export default function useGraphApi(ticker) {
   const [series, setSeries] = useState([]);
   const [graphLoading, setGraphLoading] = useState(false);
 
+  const mainTicker = ticker?.split(".")[0];
+
   useEffect(() => {
     if (!ticker) {
       setSeries([]);
@@ -21,7 +23,7 @@ export default function useGraphApi(ticker) {
       setGraphLoading(true);
 
       const graphRes = await fetch(
-        `https://api.twelvedata.com/time_series?symbol=${ticker}&interval=1day&outputsize=500&apikey=${TWELVE_DATA}`
+        `https://api.twelvedata.com/time_series?symbol=${mainTicker}&interval=1day&outputsize=500&apikey=${TWELVE_DATA}`
       );
 
       const graphData = await graphRes.json();
@@ -50,7 +52,7 @@ export default function useGraphApi(ticker) {
     return () => {
         cancelled = true;
     };
-  }, [ticker]);
+  }, [mainTicker , ticker]);
 
   return { series, graphLoading };
 }

@@ -7,6 +7,8 @@ export default function useSingleProfQtApi(ticker) {
   const [stock, setStock] = useState(null);
   const [isLoading, setIsLoading] = useState(Boolean(ticker));
 
+  const mainTicker = ticker?.split(".")[0];
+
   useEffect(() => {
     if (!ticker) {
       setStock(null);
@@ -19,10 +21,10 @@ export default function useSingleProfQtApi(ticker) {
 
       const [profileRes, quoteRes] = await Promise.all([
         fetch(
-          `https://finnhub.io/api/v1/stock/profile2?symbol=${ticker}&token=${FINNHUB}`
+          `https://finnhub.io/api/v1/stock/profile2?symbol=${mainTicker}&token=${FINNHUB}`
         ),
         fetch(
-          `https://finnhub.io/api/v1/quote?symbol=${ticker}&token=${FINNHUB}`
+          `https://finnhub.io/api/v1/quote?symbol=${mainTicker}&token=${FINNHUB}`
         ),
       ]);
       const profile = await profileRes.json();
