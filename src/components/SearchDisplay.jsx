@@ -7,7 +7,7 @@ export default function SearchDisplay({ searchResults }) {
   return (
     <ul
       className="list-group mx-auto mt-3 "
-      style={{ width: "30%", borderRadius: "12px", overflow: "hidden" }}
+      style={{ width: "340px", borderRadius: "12px", overflow: "hidden" }}
     >
       {searchResults.map((result, index) => (
         <Link

@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useGraphApi from "../custom_hooks/useGraphApi";
 import Chart from "react-apexcharts";
-import "./StockDetails.css";
+import "../stylesheets/StockDetails.css";
 import useSingleProfQtApi from "../custom_hooks/useSingleProfQuote";
 
 export default function StockDetails() {

@@ -1,4 +1,4 @@
-import  "./StocksTable.css";
+import  "../stylesheets/StocksTable.css";
 import React, { useMemo } from "react";
 import useRandProfQtApi from "../custom_hooks/useRandProfQtApi.jsx";
 import { tickers } from "../assets/tickersList.js";

@@ -21,6 +21,11 @@ function Navbar() {
           </NavLink>
         </li>
         <li>
+          <NavLink to="/wishlist" className={getNavLinkClass}>
+            Wishlist
+          </NavLink>
+        </li>
+        <li>
           <NavLink to="/about" className={getNavLinkClass}>
             About
           </NavLink>
