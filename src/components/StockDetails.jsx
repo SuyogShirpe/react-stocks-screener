@@ -8,7 +8,7 @@ import useSingleProfQtApi from "../custom_hooks/useSingleProfQuote";
 export default function StockDetails() {
   const { ticker } = useParams();
   const navigate = useNavigate();
-  const { series, graphLoading } = useGraphApi(ticker);
+  const { series, graphLoading , graphError } = useGraphApi(ticker);
   const { stock, isLoading } = useSingleProfQtApi(ticker);
 
   const options = useMemo(
@@ -49,7 +49,14 @@ export default function StockDetails() {
       </div>
     );
   }
+  if (graphError) {
+    return <p style={{color:"red" , textAlign:"center"}}>{graphError}</p>
+  }
+  if(series.length === 0){
+    return <p>No graph data available</p>
+  }
 
+  
   return (
     <div>
       <button
