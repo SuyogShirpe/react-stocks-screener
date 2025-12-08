@@ -28,13 +28,27 @@
   cursor: pointer;
   border: none;
   margin: 0.5rem;
-  display: inline-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.watchlistBtn{
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  transition: all 0.18s ease;
+  background-color: #ffffff;
+  font-size: 1.05rem;
+  display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.backBtn:hover,
-.backBtn:focus {
+.backBtn:hover,.watchlistBtn:hover,
+.backBtn:focus,.watchlistBtn:focus {
   background-color: rgba(174, 174, 174, 0.27);
   outline: none;
 }
