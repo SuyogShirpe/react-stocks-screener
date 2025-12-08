@@ -5,7 +5,7 @@ A Dexscreener-style stock market dashboard built with **React**, **Bootstrap**, 
 ---
 
 ## Live Demo
-https://suyogshirpe.github.io/Ecommerce-clone/
+https://suyogshirpe.github.io/react-stocks-screener/
 
 ---
 
