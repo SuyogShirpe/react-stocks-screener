@@ -6,7 +6,7 @@ export default function SearchDisplay({ searchResults }) {
   }
   return (
     <ul
-      className="list-group mx-auto mt-3 "
+      className="list-group mx-auto mt-5 "
       style={{ width: "340px", borderRadius: "12px", overflow: "hidden" }}
     >
       {searchResults.map((result, index) => (

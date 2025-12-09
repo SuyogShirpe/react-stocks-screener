@@ -39,7 +39,6 @@
   height: 40px;
   border: none;
   border-radius: 50%;
-  transition: all 0.18s ease;
   background-color: #ffffff;
   font-size: 1.05rem;
   display: flex;
@@ -47,8 +46,8 @@
   justify-content: center;
 }
 
-.backBtn:hover,.watchlistBtn:hover,
-.backBtn:focus,.watchlistBtn:focus {
+.backBtn:hover,
+.backBtn:focus{
   background-color: rgba(174, 174, 174, 0.27);
   outline: none;
 }

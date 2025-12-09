@@ -6,7 +6,7 @@ function Navbar() {
   const getNavLinkClass = ({ isActive }) =>
     `nav-link ${isActive ? "text-danger fw-semibold" : "text-dark text-decoration-none fw-semibold" }`;
   return (
-    <nav className="d-flex align-items-center px-3 py-2 shadow-sm bg-white">
+    <nav className="d-flex align-items-center px-3 shadow-sm bg-white">
       <img
         src={Logo}
         className="m-3"
@@ -21,8 +21,8 @@ function Navbar() {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/wishlist" className={getNavLinkClass}>
-            Wishlist
+          <NavLink to="/watchlist" className={getNavLinkClass}>
+            Watchlist
           </NavLink>
         </li>
         <li>

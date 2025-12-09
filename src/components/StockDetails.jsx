@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useGraphApi from "../custom_hooks/useGraphApi";
 import Chart from "react-apexcharts";
@@ -8,8 +8,22 @@ import useSingleProfQtApi from "../custom_hooks/useSingleProfQuote";
 export default function StockDetails() {
   const { ticker } = useParams();
   const navigate = useNavigate();
-  const { series, graphLoading , graphError } = useGraphApi(ticker);
+  const { series, graphLoading, graphError } = useGraphApi(ticker);
   const { stock, isLoading } = useSingleProfQtApi(ticker);
+
+  const [watchlist, setWatchlist] = useState(() => {
+    const storedList = localStorage.getItem("watchlist");
+    return storedList ? JSON.parse(storedList) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("watchlist", JSON.stringify(watchlist));
+  }, [watchlist]);
+
+  const isInWatchList = watchlist.some(
+    (item) => item.name === stock?.profile?.name
+  );
+  console.log(watchlist)
 
   const options = useMemo(
     () => ({
@@ -26,7 +40,12 @@ export default function StockDetails() {
       },
       yaxis: {
         tooltip: { enabled: true },
-        labels: { style: { colors: "#9CA3AF" } },
+        labels: {
+          formatter: function name(value) {
+            return value.toFixed(3);
+          },
+          style: { colors: "#9CA3AF" },
+        },
       },
       plotOptions: {
         candlestick: { colors: { upward: "#1c855bff", downward: "#EF5350" } },
@@ -50,19 +69,15 @@ export default function StockDetails() {
     );
   }
   if (graphError) {
-    return <p style={{color:"red" , textAlign:"center"}}>{graphError}</p>
+    return <p style={{ color: "red", textAlign: "center" }}>{graphError}</p>;
   }
-  if(series.length === 0){
-    return <p>No graph data available</p>
+  if (series.length === 0) {
+    return <p>No graph data available</p>;
   }
 
-  
   return (
     <div>
-      <button
-        onClick={() => navigate("/")}
-        className="btn d-flex align-items-center justify-content-center backBtn"
-      >
+      <button onClick={() => navigate("/")} className="btn backBtn">
         <i className="bi bi-arrow-left"></i>
       </button>
 
@@ -75,6 +90,18 @@ export default function StockDetails() {
             style={{ width: "40px", height: "40px" }}
           />
           <h4 className="col fw-bold">{stock.profile.name}</h4>
+          <button
+            onClick={() =>
+              setWatchlist((prev) => {
+                if (prev.some((item) => item.name === stock.profile.name))
+                  return prev;
+                return [...prev,{ name: stock.profile.name, logo: stock.profile.logo , ticker:stock.profile.ticker },];
+              })
+            }
+            className="btn watchlistBtn"
+          >
+            <i className={isInWatchList ? "bi bi-star-fill" : "bi bi-star"}></i>
+          </button>
         </div>
 
         <div className="stockData horizontal">
