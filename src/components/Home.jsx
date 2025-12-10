@@ -27,7 +27,7 @@ export default function Home() {
           ></i>
           <input
             type="text"
-            className="form-control ps-5 shadow-sm bg-white"
+            className="form-control ps-5 bg-white"
             placeholder="Search Stock"
             style={{ borderRadius: "50px" }}
             value={searchInput}
