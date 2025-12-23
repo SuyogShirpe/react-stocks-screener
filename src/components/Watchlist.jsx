@@ -21,11 +21,18 @@ function Watchlist() {
   console.log(watchlist);
 
   if (watchlist.length === 0) {
-    return <p className="text-center mt-5">Your watchlist is empty.</p>;
+    return (
+      <div className="d-flex flex-column justify-content-center align-items-center mt-5">
+        <i className="bi bi-star" style={{ fontSize: "35px" }}></i>
+        <p className="">Your watchlist is empty.</p>
+      </div>
+    );
   }
   return (
+    <>
+    <p className="text-center fw-medium mt-3 fs-3">Your Watchlist</p>
     <ul
-      className="list-group mx-auto mt-5"
+      className="list-group mx-auto mt-3"
       style={{ width: "340px", borderRadius: "12px", overflow: "hidden" }}
     >
       {watchlist.map((stock, index) => (
@@ -66,6 +73,7 @@ function Watchlist() {
         </li>
       ))}
     </ul>
+    </>
   );
 }
 
