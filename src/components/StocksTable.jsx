@@ -7,9 +7,10 @@ import StockCard from "./StockCard.jsx";
 export default function StocksTable() {
   const randomStocks = useMemo(() => {
     return [...tickers].sort(() => 0.5 - Math.random()).slice(0, 15);
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tickers]);
 
-  const { stocks, isLoading } = useRandProfQtApi(randomStocks);
+  const { stocks, isLoading , error } = useRandProfQtApi(randomStocks);
 
   if (isLoading) {
     return (
@@ -22,6 +23,18 @@ export default function StocksTable() {
         </div>
       </div>
     );
+  }
+  if(error){
+    return (
+      <p className="text-center text-danger mt-4">{error}</p>
+    );
+  }
+  if(!stocks.length){
+    return (
+      <div className="text-center mt-4">
+        No stock data available currently.
+      </div>
+    )
   }
 
   return (
