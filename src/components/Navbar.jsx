@@ -6,13 +6,14 @@ function Navbar() {
   const getNavLinkClass = ({ isActive }) =>
     `nav-link ${isActive ? "text-danger fw-semibold" : "text-dark text-decoration-none fw-semibold" }`;
   return (
-    <nav className="d-flex align-items-center px-3 shadow-sm bg-white">
+    <nav className="d-flex align-items-center pe-3 shadow-sm bg-white">
       <img
         src={Logo}
-        className="m-3"
+        className="m-2"
         style={{ width: "40px", height: "40px" }}
         alt="Logo"
-      />
+      /> 
+      <span className="fw-bold">STOCKS-SCREENER</span>
 
       <ul className="d-flex list-unstyled ms-auto gap-4 mb-0 fs-5">
         <li>
