@@ -23,7 +23,7 @@ export default function StockDetails() {
   const isInWatchList = watchlist.some(
     (item) => item.name === stock?.profile?.name
   );
-  console.log(watchlist)
+  console.log(watchlist);
 
   const options = useMemo(
     () => ({
@@ -69,10 +69,20 @@ export default function StockDetails() {
     );
   }
   if (graphError) {
-    return <p style={{ color: "red", textAlign: "center" }}>{graphError}</p>;
+    return (
+      <p className="text-center mt-4 text-muted fw-semibold">
+        No data available for this stock.
+      </p>
+    );
   }
   if (series.length === 0) {
-    return <p>No graph data available</p>;
+    return (
+      <div className="d-flex justify-content-center mt-4">
+        <div className="px-4 py-3 border rounded text-secondary">
+          No graph data available.
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -95,7 +105,14 @@ export default function StockDetails() {
               setWatchlist((prev) => {
                 if (prev.some((item) => item.name === stock.profile.name))
                   return prev;
-                return [...prev,{ name: stock.profile.name, logo: stock.profile.logo , ticker:stock.profile.ticker },];
+                return [
+                  ...prev,
+                  {
+                    name: stock.profile.name,
+                    logo: stock.profile.logo,
+                    ticker: stock.profile.ticker,
+                  },
+                ];
               })
             }
             className="btn watchlistBtn"

@@ -1,4 +1,4 @@
-import  "../stylesheets/StocksTable.css";
+import "../stylesheets/StocksTable.css";
 import React, { useMemo } from "react";
 import useRandProfQtApi from "../custom_hooks/useRandProfQtApi.jsx";
 import { tickers } from "../assets/tickersList.js";
@@ -7,10 +7,10 @@ import StockCard from "./StockCard.jsx";
 export default function StocksTable() {
   const randomStocks = useMemo(() => {
     return [...tickers].sort(() => 0.5 - Math.random()).slice(0, 15);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tickers]);
 
-  const { stocks, isLoading , error } = useRandProfQtApi(randomStocks);
+  const { stocks, isLoading, error } = useRandProfQtApi(randomStocks);
 
   if (isLoading) {
     return (
@@ -24,17 +24,21 @@ export default function StocksTable() {
       </div>
     );
   }
-  if(error){
+  if (error) {
     return (
-      <p className="text-center text-danger mt-4">{error}</p>
+      <p className="text-center text-muted fw-semibold mt-4">
+        Unable to load the graph right now.
+      </p>
     );
   }
-  if(!stocks.length){
+  if (!stocks.length) {
     return (
-      <div className="text-center mt-4">
-        No stock data available currently.
+      <div className="d-flex justify-content-center mt-4">
+        <div className="px-4 py-3 border rounded text-secondary">
+          No stock data available currently.
+        </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -53,7 +57,10 @@ export default function StocksTable() {
           <div className="col">Low</div>
         </div>
 
-        <div className="stock-scroll" style={{ maxHeight: "500px", overflow: "auto" }}>
+        <div
+          className="stock-scroll"
+          style={{ maxHeight: "500px", overflow: "auto" }}
+        >
           {stocks.map((stock) => (
             <StockCard key={stock.profile.ticker} stock={stock} />
           ))}
