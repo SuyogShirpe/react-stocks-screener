@@ -10,9 +10,7 @@ const StockCard = ({ stock }) => {
   return (
     <Link
       to={`/stock/${ticker}`}
-      className="d-flex text-center align-items-center justify-content-between py-3
-                 my-2 shadow-sm rounded bg-white stock-row"
-    >
+      className="d-flex text-center align-items-center justify-content-between stock-row">
       <div className="col">
         <img
           src={logo}

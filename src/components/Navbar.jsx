@@ -1,44 +1,48 @@
 import React from "react";
 import Logo from "../assets/Logo.png";
 import { NavLink } from "react-router-dom";
+import "../stylesheets/Navbar.css";
 
 function Navbar() {
   const getNavLinkClass = ({ isActive }) =>
-    `nav-link ${isActive ? "text-danger fw-semibold" : "text-dark text-decoration-none fw-semibold" }`;
+    `nav-link ${isActive ? "text-danger" : "text-dark"}`;
+
   return (
-    <nav className="d-flex align-items-center pe-3 shadow-sm bg-white">
+  <nav className="navbar-custom">
+    <div className="navbar-left">
       <img
         src={Logo}
-        className="m-2"
-        style={{ width: "40px", height: "40px" }}
         alt="Logo"
-      /> 
-      <span className="fw-bold">STOCKS-SCREENER</span>
+        className="navbar-logo"
+      />
+      <span className="navbar-title">STOCKS SCREENER</span>
+    </div>
 
-      <ul className="d-flex list-unstyled ms-auto gap-4 mb-0 fs-5">
-        <li>
-          <NavLink to="/" className={getNavLinkClass}>
-            Home
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/watchlist" className={getNavLinkClass}>
-            Watchlist
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/about" className={getNavLinkClass}>
-            About
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/contact" className={getNavLinkClass}>
-            Contact
-          </NavLink>
-        </li>
-      </ul>
-    </nav>
-  );
+    <ul className="navbar-links">
+      <li>
+        <NavLink to="/" className={getNavLinkClass}>
+          Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/watchlist" className={getNavLinkClass}>
+          Watchlist
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/about" className={getNavLinkClass}>
+          About
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/contact" className={getNavLinkClass}>
+          Contact
+        </NavLink>
+      </li>
+    </ul>
+  </nav>
+);
+
 }
 
 export default Navbar;

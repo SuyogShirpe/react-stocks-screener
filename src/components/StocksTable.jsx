@@ -44,7 +44,7 @@ export default function StocksTable() {
   return (
     <div className="container mt-3 d-flex justify-content-center">
       <div className="stock-table" style={{ width: "90%" }}>
-        <div className="row stock-header text-center align-items-center py-3 px-3 mb-2 shadow-sm">
+        <div className="row stock-header text-center align-items-center py-3 px-3">
           <div className="col">Logo</div>
           <div className="col">Name</div>
           <div className="col">Ticker</div>

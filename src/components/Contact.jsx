@@ -11,7 +11,7 @@ function Contact() {
 
       <div className="row justify-content-center">
         <div className="col-md-7">
-          <div className="card  p-4" style={{border:"1px solid black" , borderRadius:"12px"}}>
+          <div className="card  p-4" style={{border:"1px solid rgba(230, 230, 230, 0.9)" , borderRadius:"12px"}}>
             
             <form>
               <div className="mb-3">

@@ -10,7 +10,7 @@ function About() {
 
       <div className="row justify-content-center">
         <div className="col-md-8">
-          <div className="card p-4" style={{border:"1px solid black" , borderRadius:"12px"}}>
+          <div className="card p-4" style={{border:"1px solid rgba(230, 230, 230, 0.9)" , borderRadius:"12px"}}>
             <h4 className="fw-semibold">What This App Does</h4>
             <p>
               This Stock Screener allows users to search for companies, view real-time market data,
