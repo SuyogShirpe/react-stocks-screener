@@ -5,7 +5,7 @@ A Dexscreener-style stock market dashboard built with **React**, **Bootstrap**, 
 ---
 
 ## Live Demo
-https://react-stocks-screener.vercel.app/
+https://react-stocks-screener.vercel.app
 
 ---
 

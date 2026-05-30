@@ -58,7 +58,7 @@ function Contact() {
               </Link>
 
               <Link
-                to="https://www.linkedin.com/in/suyog-shirpe/"
+                to="https://www.linkedin.com/in/suyog-shirpe"
                 target="_blank"
                 className="btn btn-outline-dark"
               >
